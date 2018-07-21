@@ -3,8 +3,13 @@ name = "yolexo"
 version = "0.1.0"
 authors = ["theindigamer <theindigamer15@gmail.com>"]
 
+[lib]
+name = "yolexo"
+path = "src/lib.rs"
+
 [dependencies]
 regex-syntax = "^0.6.1"
 
 [dev-dependencies]
 regex-syntax = "^0.6.1"
+criterion = "^0.2.4"

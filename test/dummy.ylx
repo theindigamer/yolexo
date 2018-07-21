@@ -1,0 +1,21 @@
+lexer! {
+    type LexRet = (u64, Token, u64)
+
+    pub regex digit_char = "\p{Nd}";
+    pub regex letter_char = "\p{Lu}" | "\p{Ll}" | "\p{Lt}" | "\p{Lm}" | "\p{Lo}";
+    pub regex connecting_char = "\p{Pc}";
+    pub regex combining_char = "\p{Mn}" | "\p{Mc}";
+    pub regex formatting_char = "\p{Cf}";
+    pub regex ident_start_char = letter_char;
+    pub regex ident_mid_char = letter_char | digit_char | connecting_char | combining_char;
+    pub regex ident_end_char = "#";
+
+    pub token ident = ident_start_char ident_mid_char* ident_end_char?;
+    pub token open_variant_ident = "^" ("\p{Lu}" | "\p{Lt}" | "\p{Lo}") ident_mid_char* ident_end_char?;
+
+    match {
+        ident => { (yleft, Token::Ident(yslice), yright) }
+        open_variant_ident => { (yleft, Token::Ident(yslice), yright) }
+        _ => { panic!("unexpected character {}", ynext_char) }
+    }
+}
