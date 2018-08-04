@@ -1,0 +1,11 @@
+lexerMacro = _{ "lexer!" }
+
+letter = { 'a'..'z' | 'A'..'Z' }
+digit = { '0'..'9' }
+underscore = { '_' .. '_' }
+
+ident = { letter ~ (letter | digit | underscore)* }
+
+ident_list = _{ !digit ~ ident ~ (" " ~ ident)+ }
+
+lexer_text = {lexerMacro ~ "{" ~ (ident)+ ~ "}"}
